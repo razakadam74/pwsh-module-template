@@ -1,0 +1,29 @@
+# Build output
+/build/
+/output/
+*.nupkg
+
+# Test artifacts
+/coverage/
+TestResults*.xml
+*.coverage.xml
+PesterPreference.ps1
+
+# Editor / IDE settings (don't impose preferences on contributors)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# PowerShell
+*.psd1.bak
+*.ps1.bak
+
+# Local secrets
+.env
+.env.*
+!.env.example
