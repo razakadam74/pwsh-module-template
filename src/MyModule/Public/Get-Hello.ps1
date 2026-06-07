@@ -19,6 +19,7 @@ function Get-Hello {
     [OutputType([PSCustomObject])] 
     param (
         [Parameter(Mandatory, Position = 0, ValueFromPipeline)]
+        [ValidateNotNullOrEmpty()]
         [string[]]$Name
     )
     process {
