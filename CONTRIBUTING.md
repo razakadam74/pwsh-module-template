@@ -25,7 +25,7 @@ Requires PowerShell 7+ for development. Tests run on PowerShell 5.1 and 7+ in CI
 | ------------------------------------------------ | --------------------------- |
 | `Import-Module .\src\{{ModuleName}}\{{ModuleName}}.psd1 -Force` | Load the module locally     |
 | `Invoke-Pester`                                  | Run the test suite          |
-| `Invoke-ScriptAnalyzer -Path .\src -Recurse`     | Run linter                  |
+| `Invoke-ScriptAnalyzer -Path .\src -Recurse -Settings .\PSScriptAnalyzerSettings.psd1` | Run linter                  |
 | `Test-ModuleManifest .\src\{{ModuleName}}\{{ModuleName}}.psd1` | Validate the manifest       |
 | `.\Build.ps1`                                    | Build for publish           |
 

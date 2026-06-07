@@ -40,7 +40,8 @@ Describe 'Public functions' {
 
 Describe 'Static analysis' {
     It 'PSScriptAnalyzer reports no errors or warnings' {
-        $results = Invoke-ScriptAnalyzer -Path $script:ModuleRoot -Recurse -Severity Error, Warning
+        $settings = Join-Path $PSScriptRoot '..\PSScriptAnalyzerSettings.psd1'
+        $results = Invoke-ScriptAnalyzer -Path $script:ModuleRoot -Recurse -Settings $settings
         $results | Should -BeNullOrEmpty -Because ($results | Out-String)
     }
 }
