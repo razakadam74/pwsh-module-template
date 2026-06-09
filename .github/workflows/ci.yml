@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: ${{ matrix.os }} / pwsh
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Pester and PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+          Install-Module -Name Pester -RequiredVersion 5.7.1 -Force -SkipPublisherCheck
+          Install-Module -Name PSScriptAnalyzer -RequiredVersion 1.25.0 -Force
+
+      - name: Lint (PSScriptAnalyzer)
+        shell: pwsh
+        run: |
+          $issues = Invoke-ScriptAnalyzer -Path .\src -Recurse -Settings .\PSScriptAnalyzerSettings.psd1
+          if ($issues) { $issues | Format-Table -AutoSize; throw "PSScriptAnalyzer found $($issues.Count) issue(s)." }
+
+      - name: Validate manifest
+        shell: pwsh
+        run: Test-ModuleManifest -Path .\src\MyModule\MyModule.psd1 | Format-List Name, Version, ExportedFunctions
+
+      - name: Build
+        shell: pwsh
+        run: .\Build.ps1
+
+      - name: Test (Pester)
+        shell: pwsh
+        run: |
+          $config = New-PesterConfiguration
+          $config.Run.Path = '.\tests'
+          $config.Run.Exit = $true
+          $config.Output.Verbosity = 'Detailed'
+          Invoke-Pester -Configuration $config
