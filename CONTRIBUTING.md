@@ -27,7 +27,9 @@ Requires PowerShell 7+ for development. Tests run on PowerShell 5.1 and 7+ in CI
 | `Invoke-Pester`                                  | Run the test suite          |
 | `Invoke-ScriptAnalyzer -Path .\src -Recurse -Settings .\PSScriptAnalyzerSettings.psd1` | Run linter                  |
 | `Test-ModuleManifest .\src\{{ModuleName}}\{{ModuleName}}.psd1` | Validate the manifest       |
-| `.\Build.ps1`                                    | Build for publish           |
+| `.\Build.ps1`                                    | Stage module to `output/`   |
+| `.\Publish.ps1 -ApiKey <key> -WhatIf`            | Dry-run publish to PSGallery |
+| `.\Publish.ps1 -ApiKey <key>`                    | Publish staged module to PSGallery |
 
 ## Pull request workflow
 
