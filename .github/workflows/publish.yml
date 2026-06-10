@@ -1,0 +1,28 @@
+name: Publish
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Publish to PSGallery
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        shell: pwsh
+        run: .\Build.ps1
+
+      - name: Publish to PSGallery
+        shell: pwsh
+        run: .\Publish.ps1 -ApiKey $env:PSGALLERY_API_KEY
+        env:
+          PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
