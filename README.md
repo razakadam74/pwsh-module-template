@@ -5,6 +5,10 @@
 [![Use this template](https://img.shields.io/badge/use%20this-template-2ea44f?logo=github)](https://github.com/razakadam74/pwsh-module-template/generate)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+<p align="center">
+  <img src="assets/demo.gif" alt="Use this template, run one script, and your module imports clean and tests green" width="820">
+</p>
+
 ## What you get
 
 - Cross-platform module skeleton (`src/MyModule/{Public,Private}`) with auto-loader

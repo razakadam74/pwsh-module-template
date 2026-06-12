@@ -114,6 +114,9 @@ $readme = @(
 ) -join "`n"
 Set-Content -LiteralPath (Join-Path $root 'README.md') -Value ($readme + "`n") -NoNewline -Encoding utf8
 
+$assets = Join-Path $root 'assets'
+if (Test-Path -LiteralPath $assets) { Remove-Item -LiteralPath $assets -Recurse -Force }
+
 Test-ModuleManifest -Path $manifest | Out-Null
 
 Write-Host "Initialized '$ModuleName'." -ForegroundColor Green
