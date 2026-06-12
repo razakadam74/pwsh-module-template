@@ -11,6 +11,8 @@ jobs:
   publish:
     name: Publish to PSGallery
     runs-on: ubuntu-latest
+    # Modules generated from this template publish; the template repo itself does not.
+    if: ${{ !github.event.repository.is_template }}
     steps:
       - uses: actions/checkout@v4
 
