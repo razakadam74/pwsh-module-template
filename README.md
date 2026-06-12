@@ -12,9 +12,16 @@
 - Sample cmdlet (`Get-Hello`) demonstrating the project conventions
 - Pester 5 test suite (module meta + cmdlet tests)
 - PSScriptAnalyzer config
-- GitHub Actions CI on Windows / macOS / Linux × PowerShell 5.1 / 7+
+- GitHub Actions CI on Windows / macOS / Linux (PowerShell 7+)
 - PR + issue templates, CODE_OF_CONDUCT, SECURITY, CHANGELOG
 - Bootstrap script that personalises the template in one command
+
+## Prerequisites
+
+- **PowerShell 7+** — the module targets 7.2+ (`PowerShellVersion` in the manifest).
+- Git, and optionally the [GitHub CLI](https://cli.github.com/) for the `gh repo create` flow.
+
+Pester and PSScriptAnalyzer install automatically in CI. To run tests or lint locally: `Install-Module Pester, PSScriptAnalyzer`.
 
 ## Use it
 
@@ -41,6 +48,16 @@
 
 4. Push. CI runs on the first commit.
 
+## How publishing works
+
+Two scripts and one workflow:
+
+- **`.\Build.ps1`** stages `src/<ModuleName>/` into `output/<ModuleName>/` and fills in `FunctionsToExport`.
+- **`.\Publish.ps1 -ApiKey <key>`** re-validates the staged manifest and runs `Publish-Module` to the PowerShell Gallery (`-WhatIf` for a dry run).
+- **`.github/workflows/publish.yml`** — push a `v*.*.*` tag and CI builds, publishes to the Gallery, and cuts a GitHub Release.
+
+One-time setup before your first release: add a repository secret **`PSGALLERY_API_KEY`** (Settings → Secrets and variables → Actions) with your PowerShell Gallery API key.
+
 ## Conventions
 
 - Public cmdlets live in `src/<ModuleName>/Public/`, one function per file, filename matches function name.
@@ -50,6 +67,19 @@
 - Conventional Commits for commit messages.
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full development workflow.
+
+## How it compares
+
+No templating engine, no dependencies — just GitHub's "Use this template" button and a one-shot bootstrap script. That keeps it simple, at the cost of the configurability the Plaster-based tools offer.
+
+| | pwsh-module-template | [Catesta](https://www.catesta.dev/) | PSStucco | [Plaster](https://github.com/PowerShellOrg/Plaster) |
+|---|---|---|---|---|
+| Mechanism | GitHub template + bootstrap | Plaster generator | Plaster template | templating engine |
+| Dependencies | none | Plaster | Plaster | — |
+| CI/CD | GitHub Actions | GitHub Actions, Azure, AppVeyor, GitLab, etc. | build/test scripts | template-defined |
+| Best for | grab-and-go GitHub Actions modules | multi-platform CI choices | strict, standards-driven modules | rolling your own templates |
+
+Want multiple CI providers or lots of options? Use Catesta. Want a minimal, opinionated, GitHub-Actions-first starter? Use this.
 
 ## License
 

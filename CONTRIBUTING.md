@@ -17,7 +17,7 @@ Import-Module .\src\{{ModuleName}}\{{ModuleName}}.psd1 -Force
 Invoke-Pester
 ```
 
-Requires PowerShell 7+ for development. Tests run on PowerShell 5.1 and 7+ in CI.
+Requires PowerShell 7+ for development. CI runs tests on PowerShell 7 across Linux, macOS, and Windows.
 
 ## Common commands
 
@@ -35,7 +35,7 @@ Requires PowerShell 7+ for development. Tests run on PowerShell 5.1 and 7+ in CI
 
 1. Fork, branch off `main`, push to your fork.
 2. Open a PR against `{{GitHubUser}}/{{ModuleName}}:main`.
-3. CI runs lint, manifest validation, and tests on PowerShell 5.1 and 7+ across Linux, macOS, and Windows. All checks must pass.
+3. CI runs lint, manifest validation, and tests on PowerShell 7 across Linux, macOS, and Windows. All checks must pass.
 4. Maintainer reviews and squash-merges.
 
 ## Pull request checklist
