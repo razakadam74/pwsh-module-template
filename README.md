@@ -21,20 +21,20 @@
 1. Click **Use this template → Create a new repository** on GitHub, or run:
 
    ```powershell
-   gh repo create my-org/MyModule --public --template razakadam74/pwsh-module-template --clone
-   cd MyModule
+   gh repo create my-org/AcmeTools --public --template razakadam74/pwsh-module-template --clone
+   cd AcmeTools
    ```
 
-2. Run the bootstrap script to replace placeholders (`{{ModuleName}}`, `{{Author}}`, `{{GitHubUser}}`, `{{Year}}`, `{{ReleaseDate}}`) and rename the module folder:
+2. Run the bootstrap script to replace placeholders (`{{ModuleName}}`, `{{Author}}`, `{{GitHubUser}}`, `{{Year}}`, `{{ReleaseDate}}`), rename the module folder, regenerate the manifest GUID, and remove itself:
 
    ```powershell
-   .\Bootstrap.ps1 -ModuleName 'MyModule' -Author 'Your Name' -GitHubUser 'your-handle'
+   .\Initialize-Template.ps1 -ModuleName 'AcmeTools' -Author 'Your Name' -GitHubUser 'your-handle'
    ```
 
 3. Verify it loads:
 
    ```powershell
-   Import-Module .\src\MyModule\MyModule.psd1 -Force
+   Import-Module .\src\AcmeTools\AcmeTools.psd1 -Force
    Get-Hello -Name 'World'
    Invoke-Pester
    ```
