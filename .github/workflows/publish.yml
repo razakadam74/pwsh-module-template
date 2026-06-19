@@ -14,7 +14,7 @@ jobs:
     # Modules generated from this template publish; the template repo itself does not.
     if: ${{ !github.event.repository.is_template }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build
         shell: pwsh
